@@ -61,6 +61,7 @@ X-My-Header:Value2\r\n";
 
     const MIME = 'mime';
     const URI = 'uri';
+    const PAYLOAD = 'payload';
 
     private $request;
 
@@ -436,32 +437,56 @@ Transfer-Encoding: chunked\r\n", $request);
         $this->assertNotEquals($prev, $new);
     }
 
-    public function testBuildGetRequestSetupTheSameAsOldGet(){
-        $old_request = \Httpful\Request::get(URI, MIME);
+    public function testBuildGetRequestSetupSameAsGet(){
+        $old_request = \Httpful\Request::get(self::URI, self::MIME);
         
-        $this->request->buildGetRequest(URI, MIME);
+        $this->request->buildGetRequest(self::URI, self::MIME);
         
         $this->assertEquals($this->request, $old_request);
     }
 
     public function testBuildGetRequestShouldSetMime(){
-        $this->request->buildGetRequest(URI, MIME);
+        $this->request->buildGetRequest(self::URI, self::MIME);
 
-        $this->assertEquals($this->request->content_type, MIME);
+        $this->assertEquals($this->request->content_type, self::MIME);
     }
 
     public function testBuildGetRequestShouldSetUri(){
-        $this->request->buildGetRequest(URI, MIME);
+        $this->request->buildGetRequest(self::URI, self::MIME);
 
-        $this->assertEquals($this->request->uri, URI);
+        $this->assertEquals($this->request->uri, self::URI);
     }
 
     public function testBuildGetRequestShouldSetMethodToGet(){
         $this->request->method = 'BOGUS';
 
-        $this->request->buildGetRequest(URI, MIME);
+        $this->request->buildGetRequest(self::URI, self::MIME);
 
         $this->assertEquals($this->request->method, 'GET');
+    }
+
+    public function testBuildPostRequestSetupSameAsPost(){
+        $old_request = \Httpful\Request::post(self::URI, self::PAYLOAD, self::MIME);
+
+        $this->request->buildPostRequest(self::URI, self::PAYLOAD, self::MIME);
+
+        $this->assertEquals($this->request, $old_request);
+    }
+
+    public function testBuildPostRequestShouldSetUri(){
+        $this->request->buildPostRequest(self::URI, self::PAYLOAD, self::MIME);
+
+        $this->assertEquals($this->request->uri, self::URI);
+    }
+
+    public function testBuildPostRequestShouldSetPayload(){
+        $this->request->buildPostRequest(self::URI, self::PAYLOAD, self::MIME);
+        $this->assertEquals($this->request->payload, self::PAYLOAD);
+    }
+
+    public function testBuildPostRequestShouldSetMime(){
+        $this->request->buildPostRequest(self::URI, self::PAYLOAD, self::MIME);
+        $this->assertEquals($this->request->content_type, self::MIME);
     }
 } 
 

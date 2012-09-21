@@ -847,9 +847,9 @@ class Request
      * @return Request
      */
     public function buildGetRequest($uri, $mime = null){
-        $this->uri($uri)
-             ->mime($mime)
-             ->method(HTTP::GET);
+        return $this->uri($uri)
+                ->mime($mime)
+                ->method(HTTP::GET);
     }
 
     /**
@@ -874,6 +874,19 @@ class Request
     public static function post($uri, $payload = null, $mime = null)
     {
         return self::init(Http::POST)->uri($uri)->body($payload, $mime);
+    }
+
+    /**
+     * instantiated method to mimc static post to make class easier to mock
+     * @param  string $uri
+     * @param  string $payloan data to send in body of request
+     * @param  string $mime    content-type
+     * @return Request
+     */
+    public function buildPostRequest($uri, $payload = null, $mime = null){
+        return $this->method(HTTP::POST)
+                ->uri($uri)
+                ->body($payload, $mime);
     }
 
     /**
