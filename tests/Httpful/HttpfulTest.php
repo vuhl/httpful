@@ -425,7 +425,32 @@ Transfer-Encoding: chunked\r\n", $request);
         $new = \Httpful\Httpful::get(\Httpful\Mime::XML);
         $this->assertNotEquals($prev, $new);
     }
-}
+
+    public function testBuildGetRequestSetupTheSameAsOldGet(){
+        $old_request = \Httpful\Request::get('uri', 'mime');
+        $new_request = new \Httpful\Request();
+        
+        $new_request->buildGetRequest('uri', 'mime');
+        
+        $this->assertEquals($new_request, $old_request);
+    }
+
+    public function testBuildGetRequestShouldSetMethod(){
+        $request = new \Httpful\Request();
+
+        $request->buildGetRequest('uri', 'mime');
+
+        $this->assertEquals($request->method, 'GET');
+    }
+
+     public function testBuildGetRequestShouldSetMethod(){
+        $request = new \Httpful\Request();
+
+        $request->buildGetRequest('uri', 'mime');
+
+        $this->assertEquals($request->method, 'GET');
+    }
+} 
 
 class DemoMimeHandler extends \Httpful\Handlers\MimeHandlerAdapter {
     public function parse($body) {

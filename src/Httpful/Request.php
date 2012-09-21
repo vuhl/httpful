@@ -66,7 +66,7 @@ class Request
      * for internal use.
      * @param array $attrs hash of initial attribute values
      */
-    private function __construct($attrs = null)
+    public function __construct($attrs = null)
     {
         if (!is_array($attrs)) return;
         foreach ($attrs as $attr => $value) {
@@ -835,11 +835,23 @@ class Request
      * @param string $uri optional uri to use
      * @param string $mime expected
      */
-    public static function get($uri, $mime = null)
+    public function get($uri, $mime = null)
     {
         return self::init(Http::GET)->uri($uri)->mime($mime);
     }
 
+    /**
+     * instantiated method to mimic static get to make class easier to mock
+     * @param  string $uri  
+     * @param  string $mime 
+     * @return Request
+     */
+    public function buildGetRequest($uri, $mime = null){
+        $this//->sendsType($mime)
+               ->expectsType($mime)
+               ->uri($uri)
+               ->mime($mime);
+    }
 
     /**
      * Like Request:::get, except that it sends off the request as well
