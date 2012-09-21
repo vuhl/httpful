@@ -847,10 +847,9 @@ class Request
      * @return Request
      */
     public function buildGetRequest($uri, $mime = null){
-        $this//->sendsType($mime)
-               ->expectsType($mime)
-               ->uri($uri)
-               ->mime($mime);
+        $this->uri($uri)
+             ->mime($mime)
+             ->method(HTTP::GET);
     }
 
     /**

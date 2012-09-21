@@ -58,6 +58,16 @@ Connection: keep-alive
 Transfer-Encoding: chunked
 X-My-Header:Value1
 X-My-Header:Value2\r\n";
+
+    const MIME = 'mime';
+    const URI = 'uri';
+
+    private $request;
+
+    function setUp(){
+        parent::setUp();
+        $this->request = new \Httpful\Request();
+    }
     function testInit()
     {
       $r = Request::init();
@@ -427,28 +437,31 @@ Transfer-Encoding: chunked\r\n", $request);
     }
 
     public function testBuildGetRequestSetupTheSameAsOldGet(){
-        $old_request = \Httpful\Request::get('uri', 'mime');
-        $new_request = new \Httpful\Request();
+        $old_request = \Httpful\Request::get(URI, MIME);
         
-        $new_request->buildGetRequest('uri', 'mime');
+        $this->request->buildGetRequest(URI, MIME);
         
-        $this->assertEquals($new_request, $old_request);
+        $this->assertEquals($this->request, $old_request);
     }
 
-    public function testBuildGetRequestShouldSetMethod(){
-        $request = new \Httpful\Request();
+    public function testBuildGetRequestShouldSetMime(){
+        $this->request->buildGetRequest(URI, MIME);
 
-        $request->buildGetRequest('uri', 'mime');
-
-        $this->assertEquals($request->method, 'GET');
+        $this->assertEquals($this->request->content_type, MIME);
     }
 
-     public function testBuildGetRequestShouldSetMethod(){
-        $request = new \Httpful\Request();
+    public function testBuildGetRequestShouldSetUri(){
+        $this->request->buildGetRequest(URI, MIME);
 
-        $request->buildGetRequest('uri', 'mime');
+        $this->assertEquals($this->request->uri, URI);
+    }
 
-        $this->assertEquals($request->method, 'GET');
+    public function testBuildGetRequestShouldSetMethodToGet(){
+        $this->request->method = 'BOGUS';
+
+        $this->request->buildGetRequest(URI, MIME);
+
+        $this->assertEquals($this->request->method, 'GET');
     }
 } 
 
