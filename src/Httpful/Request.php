@@ -847,6 +847,9 @@ class Request
      * @return Request
      */
     public function buildGetRequest($uri, $mime = null){
+
+        Bootstrap::init();
+
         return $this->uri($uri)
                 ->mime($mime)
                 ->method(HTTP::GET);
