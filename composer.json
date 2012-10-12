@@ -1,11 +1,14 @@
 {
-    "name": "nategood/httpful",
+    "name": "vuhl/httpful",
     "description": "A Readable, Chainable, REST friendly, PHP HTTP Client",
     "homepage": "http://github.com/nategood/httpful",
     "license": "MIT",
     "keywords": ["http", "curl", "rest", "restful", "api", "requests"],
     "version": "0.1.7",
     "authors": [
+	{
+            "name": "VUHL Employees"
+	},
         {
             "name": "Nate Good",
             "email": "me@nategood.com",
